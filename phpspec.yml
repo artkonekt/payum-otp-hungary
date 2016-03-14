@@ -1,0 +1,4 @@
+suites:
+    konekt_otp_suite:
+        namespace: Konekt\PayumOtp
+        psr4_prefix: Konekt\PayumOtp
