@@ -12,9 +12,7 @@
 
 include('../vendor/autoload.php');
 
-use Monolog\Handler\FilterHandler;
 use Monolog\Handler\RotatingFileHandler;
-use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Payum\Core\GatewayFactoryInterface;
 use Payum\Core\PayumBuilder;
@@ -41,7 +39,7 @@ $payum = (new PayumBuilder())
     ])
     ->getPayum();
 
-// create a log channel
+//create a log channel
 $logger = new Logger('payum-otp');
 $logger->pushHandler(new RotatingFileHandler(__DIR__ . '/../var/logs/actions', Logger::WARNING));
 

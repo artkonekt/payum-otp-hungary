@@ -28,9 +28,9 @@ if ($reply = $gateway->execute(new Capture($token), true)) {
         die();
     }
 
-    throw new \LogicException('Unsupported reply', null, $reply);
+    //throw new \LogicException('Unsupported reply', null, $reply);
 }
 
 $payum->getHttpRequestVerifier()->invalidate($token);
 
-header("Location: ".$token->getAfterUrl());
+header("Location: " . $token->getAfterUrl());

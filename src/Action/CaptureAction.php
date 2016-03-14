@@ -3,6 +3,7 @@ namespace Konekt\PayumOtp\Action;
 
 use Payum\Core\Action\GatewayAwareAction;
 use Payum\Core\Bridge\Spl\ArrayObject;
+use Payum\Core\Reply\HttpRedirect;
 use Payum\Core\Request\Capture;
 use Payum\Core\Exception\RequestNotSupportedException;
 
@@ -19,7 +20,11 @@ class CaptureAction extends GatewayAwareAction
 
         $model = ArrayObject::ensureArrayObject($request->getModel());
 
-        throw new \LogicException('Not implemented');
+        $shopId = '02299991';
+        $transactionId = 'alma';
+
+        $otpCaptureUrl = sprintf('https://www.otpbankdirekt.hu/webshop/do/webShopVasarlasInditas?posId=%s&azonosito=%s', $shopId, $transactionId);
+        throw new HttpRedirect($otpCaptureUrl);
     }
 
     /**
