@@ -88,6 +88,19 @@ class Api
         return $result;
     }
 
+    public function getTransactionStatus($posId,
+                                    $azonosito,
+                                    $maxRekordSzam,
+                                    $idoszakEleje,
+                                    $idoszakVege)
+    {
+        return $this->service->tranzakcioStatuszLekerdezes($posId,
+            $azonosito,
+            $maxRekordSzam,
+            $idoszakEleje,
+            $idoszakVege);
+    }
+
     private function suppressLibraryErrors()
     {
         $this->originalErrorReporting = ini_get('error_reporting');

@@ -31,6 +31,8 @@ class CaptureAction extends BaseApiAwareAction
 
         $this->testCapture();
 
+        //$this->testRetrieveStatus();
+
         die;
 
     }
@@ -56,14 +58,14 @@ class CaptureAction extends BaseApiAwareAction
         $shopId = '#02299991';
         $transId = uniqid('POTPTEST');
 
-        //$url = sprintf('https://www.otpbankdirekt.hu/webshop/do/webShopVasarlasInditas?posId=%s&azonosito=%s', urlencode($shopId), urlencode($transId));
-        //
-        //ob_start();
-        //header("Connection: close");
-        //header("Location: " . $url);
-        //header("Content-Length: " . ob_get_length());
-        //ob_end_flush();
-        //flush();
+        $url = sprintf('https://www.otpbankdirekt.hu/webshop/do/webShopVasarlasInditas?posId=%s&azonosito=%s', urlencode($shopId), urlencode($transId));
+
+        ob_start();
+        header("Connection: close");
+        header("Location: " . $url);
+        header("Content-Length: " . ob_get_length());
+        ob_end_flush();
+        flush();
 
         $response = $this->api->capture(
             $shopId,
@@ -91,6 +93,21 @@ class CaptureAction extends BaseApiAwareAction
         var_dump($response);
     }
 
+    private function testRetrieveStatus()
+    {
+        $shopId = '#02299991';
+        $transId ='POTPTEST56e8468eef2f7';
+
+        $response = $this->api->getTransactionStatus(
+            $shopId,
+            $transId,
+            1,
+            time() - (12 * 60 * 60),
+            time() + (12 * 60 * 60)
+        );
+
+        var_dump($response);
+    }
     /**
      * {@inheritDoc}
      */
