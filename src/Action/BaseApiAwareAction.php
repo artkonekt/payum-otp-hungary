@@ -1,12 +1,12 @@
 <?php
-namespace Konekt\PayumOtp\Action\Api;
+namespace Konekt\PayumOtp\Action;
 
-use Payum\Core\Action\ActionInterface;
+use Konekt\PayumOtp\Bridge\OtpSdk4\Api;
+use Payum\Core\Action\GatewayAwareAction;
 use Payum\Core\ApiAwareInterface;
 use Payum\Core\Exception\UnsupportedApiException;
-use Konekt\PayumOtp\Api;
 
-abstract class BaseApiAwareAction implements ActionInterface, ApiAwareInterface
+abstract class BaseApiAwareAction extends GatewayAwareAction implements ApiAwareInterface
 {
     /**
      * @var Api
@@ -24,4 +24,6 @@ abstract class BaseApiAwareAction implements ActionInterface, ApiAwareInterface
 
         $this->api = $api;
     }
+
+
 }

@@ -1,13 +1,11 @@
 <?php
 namespace Konekt\PayumOtp\Action;
 
-use Payum\Core\Action\GatewayAwareAction;
-use Payum\Core\Bridge\Spl\ArrayObject;
-use Payum\Core\Reply\HttpRedirect;
+use Konekt\PayumOtp\Bridge\OtpSdk4\WebShopService;
 use Payum\Core\Request\Capture;
 use Payum\Core\Exception\RequestNotSupportedException;
 
-class CaptureAction extends GatewayAwareAction
+class CaptureAction extends BaseApiAwareAction
 {
     /**
      * {@inheritDoc}
@@ -18,13 +16,36 @@ class CaptureAction extends GatewayAwareAction
     {
         RequestNotSupportedException::assertSupports($this, $request);
 
-        $model = ArrayObject::ensureArrayObject($request->getModel());
+        //$model = ArrayObject::ensureArrayObject($request->getModel());
+        //
+        //$shopId = '02299991';
+        //$transactionId = 'alma';
+        //
+        //$otpCaptureUrl = sprintf('https://www.otpbankdirekt.hu/webshop/do/webShopVasarlasInditas?posId=%s&azonosito=%s', $shopId, $transactionId);
+        //throw new HttpRedirect($otpCaptureUrl);
 
-        $shopId = '02299991';
-        $transactionId = 'alma';
+        //$this->testPing();
 
-        $otpCaptureUrl = sprintf('https://www.otpbankdirekt.hu/webshop/do/webShopVasarlasInditas?posId=%s&azonosito=%s', $shopId, $transactionId);
-        throw new HttpRedirect($otpCaptureUrl);
+        $this->testTransactionIdGeneration();
+
+        die;
+
+    }
+
+    private function testPing()
+    {
+        $result = $this->api->ping();
+
+        var_dump($result);
+    }
+
+    private function testTransactionIdGeneration()
+    {
+        $shopId = '#02299991';
+
+        $result = $this->api->generateTransactionId($shopId);
+
+        var_dump($result);
     }
 
     /**
