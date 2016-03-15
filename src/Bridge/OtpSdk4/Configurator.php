@@ -27,19 +27,29 @@ class Configurator
 
 
         $confFileDir = sys_get_temp_dir();
-        $this->generateConfigFile($confFileDir);
+        $this->generateConfigFile($confFileDir, $config);
 
         define('WEBSHOP_LIB_DIR', $this->sdkLibDir);
         define('WEBSHOP_CONF_DIR', $confFileDir);
     }
 
-    private function generateConfigFile($dir)
+    private function generateConfigFile($dir, $config)
     {
         $originalConfigFile = $this->sdkLibDir .'/../config/' . self::CONFIG_FILE_NAME;
 
         $contents = file_get_contents($originalConfigFile);
-        $replacedContents = preg_replace('/otp\.webshop\.PRIVATE_KEY_FILE_#02299991=.*/', 'otp.webshop.PRIVATE_KEY_FILE_#02299991=' . $this->privateKeyFileName, $contents);
-        file_put_contents($dir  . '/' . self::CONFIG_FILE_NAME, $replacedContents);
+
+        $contents = preg_replace('/otp\.webshop\.PRIVATE_KEY_FILE_#02299991=.*/', 'otp.webshop.PRIVATE_KEY_FILE_#02299991=' . $this->privateKeyFileName, $contents);
+
+        $contents = preg_replace('/otp\.webshop\.TRANSACTION_LOG_DIR=.*/', 'otp.webshop.TRANSACTION_LOG_DIR=' . $config['payum.api.transactionLogDir'], $contents);
+        $contents = preg_replace('/otp\.webshop\.transaction_log_dir\.SUCCESS_DIR=.*/', 'otp.webshop.transaction_log_dir.SUCCESS_DIR=' . $config['payum.api.transactionLogDir.success'], $contents);
+        $contents = preg_replace('/otp\.webshop\.transaction_log_dir\.FAILED_DIR=.*/', 'otp.webshop.transaction_log_dir.FAILED_DIR=' . $config['payum.api.transactionLogDir.failed'], $contents);
+
+        $contents = preg_replace('/log4php\.appender\.WebShopClient\.File=.*/', 'log4php.appender.WebShopClient.File=' . $config['payum.api.log4php.file'], $contents);
+
+        file_put_contents($dir  . '/' . self::CONFIG_FILE_NAME, $contents);
+
+
     }
 
     public function getMainServiceFile()
