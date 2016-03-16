@@ -41,15 +41,6 @@ class OtpOffsiteGatewayFactory extends GatewayFactory
                 'payum.api.sdkDir'
             ];
 
-            $config['payum.api.sdkDir'] = '/home/flajos/Documents/work/artkonekt/payum-otp/docs/otp_original';
-            $config['payum.api.privateKeyFile'] = '/home/flajos/Documents/work/artkonekt/payum-otp/docs/otp_original/sign_tool/#02299991.privKey.pem';
-
-            $config['payum.api.transactionLogDir'] = '/home/flajos/Documents/work/artkonekt/payum-otp/var/logs/transactions';
-            $config['payum.api.transactionLogDir.success'] = '/home/flajos/Documents/work/artkonekt/payum-otp/var/logs/transactions/success';
-            $config['payum.api.transactionLogDir.failed'] = '/home/flajos/Documents/work/artkonekt/payum-otp/var/logs/transactions/failed';
-
-            $config['payum.api.log4php.file'] = '/home/flajos/Documents/work/artkonekt/payum-otp/var/logs/log4php.log';
-
             $config['payum.api'] = function (ArrayObject $config) {
                 $config->validateNotEmpty($config['payum.required_options']);
 

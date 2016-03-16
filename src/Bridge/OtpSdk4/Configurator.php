@@ -23,7 +23,7 @@ class Configurator
     {
 
         $this->privateKeyFileName = $config['payum.api.privateKeyFile'];
-        $this->sdkLibDir = $config['payum.api.sdkDir'] . '/kliensek/php/otpwebshop/lib';
+        $this->sdkLibDir = $config['payum.api.sdkDir'] . '/lib';
 
 
         $confFileDir = sys_get_temp_dir();
@@ -39,12 +39,15 @@ class Configurator
 
         $contents = file_get_contents($originalConfigFile);
 
+        //private keyfile config
         $contents = preg_replace('/otp\.webshop\.PRIVATE_KEY_FILE_#02299991=.*/', 'otp.webshop.PRIVATE_KEY_FILE_#02299991=' . $this->privateKeyFileName, $contents);
 
+        //log directory for the transactions keyfile config
         $contents = preg_replace('/otp\.webshop\.TRANSACTION_LOG_DIR=.*/', 'otp.webshop.TRANSACTION_LOG_DIR=' . $config['payum.api.transactionLogDir'], $contents);
         $contents = preg_replace('/otp\.webshop\.transaction_log_dir\.SUCCESS_DIR=.*/', 'otp.webshop.transaction_log_dir.SUCCESS_DIR=' . $config['payum.api.transactionLogDir.success'], $contents);
         $contents = preg_replace('/otp\.webshop\.transaction_log_dir\.FAILED_DIR=.*/', 'otp.webshop.transaction_log_dir.FAILED_DIR=' . $config['payum.api.transactionLogDir.failed'], $contents);
 
+        //log directory for the webshopclient
         $contents = preg_replace('/log4php\.appender\.WebShopClient\.File=.*/', 'log4php.appender.WebShopClient.File=' . $config['payum.api.log4php.file'], $contents);
 
         file_put_contents($dir  . '/' . self::CONFIG_FILE_NAME, $contents);
