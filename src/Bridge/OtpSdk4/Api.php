@@ -18,21 +18,28 @@ class Api
 
     private $service;
 
-    public function __construct($config)
+    public function __construct($config, $sdkService = null)
     {
-        if (PHP_MAJOR_VERSION > 5) {
-            require_once('polyfill70.php');
-        }
-
         $configurator = new Configurator($config);
-        $serviceName = $configurator->getMainServiceFile();
 
         $this->suppressLibraryErrors();
 
-        require_once($serviceName);
-        $this->service = new \WebShopService();
+        if (!$sdkService) {
+            $serviceName = $configurator->getMainServiceFile();
+            //There is no autoloading in the SDK, we need to include the class file
+            require_once($serviceName);
+
+            //original SDK checksum(md5sum): aae7d5f60a87511a685767f26b8af4ca
+            //TODO: relocate this to the documentation
+            $this->service = new \WebShopService();
+        }
 
         $this->restoreErrorReporting();
+    }
+
+    public function setSandbox()
+    {
+
     }
 
     public function generateTransactionId($shopId)

@@ -54,7 +54,7 @@ $payum = (new PayumBuilder())
 
 //create a log channel
 $logger = new Logger('payum-otp');
-$logger->pushHandler(new RotatingFileHandler(__DIR__ . '/../var/logs/actions', Logger::WARNING));
+$logger->pushHandler(new RotatingFileHandler(__DIR__ . '/../var/logs/payum-actions/actions', Logger::WARNING));
 
 $gateway = $payum->getGateway($gatewayName);
 $gateway->addExtension(new LogExecutedActionsExtension($logger));
