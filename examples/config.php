@@ -11,6 +11,7 @@
  */
 
 include('../vendor/autoload.php');
+include('params.php');
 
 use Konekt\PayumOtp\OtpOffsiteGatewayFactory;
 use Monolog\Handler\RotatingFileHandler;
@@ -24,18 +25,10 @@ use Payum\Core\Model\Payment;
 $paymentClass = Payment::class;
 $gatewayName = 'otp_offsite';
 
-$config = [
-    'factory' => 'otp_offsite',
-
-    'payum.api.sdkDir' => '/home/flajos/Documents/work/artkonekt/payum-otp/docs/otp_original/kliensek/php/otpwebshop',
-    'payum.api.privateKeyFile' => '/home/flajos/Documents/work/artkonekt/payum-otp/docs/otp_original/sign_tool/#02299991.privKey.pem',
-
-    'payum.api.transactionLogDir' => '/home/flajos/Documents/work/artkonekt/payum-otp/var/logs/transactions',
-    'payum.api.transactionLogDir.success' => '/home/flajos/Documents/work/artkonekt/payum-otp/var/logs/transactions/success',
-    'payum.api.transactionLogDir.failed' => '/home/flajos/Documents/work/artkonekt/payum-otp/var/logs/transactions/failed',
-
-    'payum.api.log4php.file' => '/home/flajos/Documents/work/artkonekt/payum-otp/var/logs/log4php.log'
-];
+$config = array_merge(
+    ['factory' => 'otp_offsite'],
+    $params
+);
 
 /** @var Payum $payum */
 $payum = (new PayumBuilder())
@@ -45,10 +38,10 @@ $payum = (new PayumBuilder())
     })
     ->addGateway($gatewayName, $config)
     ->setGenericTokenFactoryPaths([
-        'capture' => 'payum-otp/examples/capture.php',
-        'notify' => 'payum-otp/examples/notify.php',
-        'authorize' => 'payum-otp/examples/authorize.php',
-        'refund' => 'payum-otp/examples/refund.php'
+        'capture' => $basePrefixPath . '/examples/capture.php',
+        'notify' => $basePrefixPath . '/examples/notify.php',
+        'authorize' => $basePrefixPath . '/examples/authorize.php',
+        'refund' => $basePrefixPath . '/examples/refund.php'
     ])
     ->getPayum();
 

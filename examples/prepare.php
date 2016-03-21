@@ -31,7 +31,7 @@ $payment->setDetails(array(
 
 $storage->update($payment);
 
-$captureToken = $payum->getTokenFactory()->createCaptureToken($gatewayName, $payment, 'payum-otp/examples/done.php');
+$captureToken = $payum->getTokenFactory()->createCaptureToken($gatewayName, $payment, $basePrefixPath . '/examples/done.php');
 
 var_dump($captureToken);
 

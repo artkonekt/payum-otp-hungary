@@ -1,7 +1,7 @@
 {
-    "name": "konekt/payum-otp",
+    "name": "konekt/payum-otp-hungary",
     "type": "library",
-    "description": "Custom Payum gateway for hungarian OTP Bank.",
+    "description": "Custom Payum gateway for OTP Bank - Hungary.",
     "keywords": ["payment", "otp", "payum"],
     "license": "MIT",
     "authors": [
