@@ -26,14 +26,13 @@ $gateway = $payum->getGateway($token->getGatewayName());
 
 // or Payum can fetch the model for you while executing a request (Preferred).
 $gateway->execute($status = new GetHumanStatus($token));
-$payment = $status->getFirstModel();
 
-header('Content-Type: application/json');
-echo json_encode(array(
-    'status' => $status->getValue(),
-    'order' => array(
-        'total_amount' => $payment->getTotalAmount(),
-        'currency_code' => $payment->getCurrencyCode(),
-        'details' => $payment->getDetails(),
-    ),
-));
+if ($status->isCaptured()) {
+    echo 'CAPTURED, FASZIKAIM';
+} elseif ($status->isFailed()) {
+    echo 'Failed, gyurikam';
+} elseif ($status->isCanceled()) {
+    echo 'Cancelled, te szorakozol?';
+}
+
+var_dump($status);

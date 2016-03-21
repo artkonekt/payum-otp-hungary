@@ -101,11 +101,15 @@ class Api
                                     $idoszakEleje,
                                     $idoszakVege)
     {
+        $this->suppressLibraryErrors();
+
         return $this->service->tranzakcioStatuszLekerdezes($posId,
             $azonosito,
             $maxRekordSzam,
             $idoszakEleje,
             $idoszakVege);
+
+        $this->restoreErrorReporting();
     }
 
     private function suppressLibraryErrors()

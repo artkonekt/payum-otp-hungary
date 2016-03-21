@@ -23,11 +23,10 @@ class ConvertPaymentAction extends GatewayAwareAction
         /** @var PaymentInterface $payment */
         $payment = $request->getSource();
 
+        
+        $details['etwas'] = 'valami';
 
-        $model = (array) $payment;
-        $model['etwas'] = 'valami';
-
-        $request->setResult($model);
+        $request->setResult($details);
         //throw new \LogicException('Not implemented');
     }
 
