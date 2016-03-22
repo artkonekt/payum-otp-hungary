@@ -1,9 +1,7 @@
 <?php
 namespace Konekt\PayumOtp;
 
-use Konekt\PayumOtp\Action\Api\CaptureAction as ApiCaptureAction;
-use Konekt\PayumOtp\Action\Api\FetchCaptureResultAction;
-use Konekt\PayumOtp\Action\Api\InitiateCaptureAction;
+use Konekt\PayumOtp\Action\FetchCaptureResultAction;
 use Konekt\PayumOtp\Action\AuthorizeAction;
 use Konekt\PayumOtp\Action\CancelAction;
 use Konekt\PayumOtp\Action\ConvertPaymentAction;
@@ -12,7 +10,6 @@ use Konekt\PayumOtp\Action\NotifyAction;
 use Konekt\PayumOtp\Action\RefundAction;
 use Konekt\PayumOtp\Action\StatusAction;
 use Konekt\PayumOtp\Bridge\OtpSdk4\Api;
-use Konekt\PayumOtp\Request\Api\Capture;
 use Payum\Core\Bridge\Spl\ArrayObject;
 use Payum\Core\GatewayFactory;
 
@@ -30,7 +27,6 @@ class OtpOffsiteGatewayFactory extends GatewayFactory
             'payum.action.status' => new StatusAction(),
             'payum.action.convert_payment' => new ConvertPaymentAction(),
 
-            'payum.action.initiate_capture' => new InitiateCaptureAction(),
             'payum.action.fetch_capture_result' => new FetchCaptureResultAction(),
         ]);
 
