@@ -41,8 +41,6 @@ class InitiateCaptureAction extends AbstractApiAwareAction
         $details['shopId'] = $shopId;
         $details['transId'] = $transId;
 
-        $backUrl = $request->getToken()->getTargetUrl();
-
         $response = $this->api->capture(
             $shopId,
             $transId,
@@ -61,7 +59,7 @@ class InitiateCaptureAction extends AbstractApiAwareAction
             RequestUtils::safeParam($_REQUEST, 'ugyfelRegisztracioKell'),
             RequestUtils::safeParam($_REQUEST, 'regisztraltUgyfelId'),
             "Valami megjegyzes",
-            $backUrl,
+            $details['backUrl'],
             RequestUtils::safeParam($_REQUEST, 'zsebAzonosito'),
             RequestUtils::safeParam($_REQUEST, "ketlepcsosFizetes")
         );
@@ -70,7 +68,7 @@ class InitiateCaptureAction extends AbstractApiAwareAction
         if ($response->isSuccessful()) {
 
             $details['status'] = GetHumanStatus::STATUS_PENDING;
-            $request->setModel($details);
+            $details['captureInstanceId'] = $response->getInstanceId();
 
             $url = sprintf('https://www.otpbankdirekt.hu/webshop/do/webShopVasarlasInditas?posId=%s&azonosito=%s', urlencode($shopId), urlencode($transId));
             throw new HttpRedirect($url);

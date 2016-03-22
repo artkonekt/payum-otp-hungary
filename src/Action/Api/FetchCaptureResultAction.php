@@ -41,6 +41,8 @@ class FetchCaptureResultAction extends AbstractApiAwareAction
         );
 
         if ($response) {
+            $details['fetchInstanceId'] = $response->getInstanceId();
+            
             $answer = $response->getAnswer();
             if ($response->isSuccessful() && $response->getAnswer() && count($answer->getWebShopFizetesAdatok()) > 0) {
                 $fizetesAdatok = $answer->getWebShopFizetesAdatok();
@@ -49,6 +51,7 @@ class FetchCaptureResultAction extends AbstractApiAwareAction
                 $responseCode = $tranzAdatok->getPosValaszkod();
                 if ($tranzAdatok->isSuccessful()) {
                     $details['status'] = GetHumanStatus::STATUS_CAPTURED;
+                    $details['authorizationCode'] = $tranzAdatok->getAuthorizaciosKod();
                 } else if ("VISSZAUTASITOTTFIZETES" == $responseCode) {
                     $details['status'] = GetHumanStatus::STATUS_CANCELED; //TODO??
                 } else {

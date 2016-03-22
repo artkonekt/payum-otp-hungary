@@ -17,18 +17,5 @@ use Payum\Core\Request\Generic;
 
 class InitiateCapture extends Generic
 {
-    /**
-     * InitiateCapture constructor.
-     *
-     * @param mixed $model
-     */
-    public function __construct($model)
-    {
-        if (!$model instanceof Token) {
-            throw new \InvalidArgumentException('A token object is expected');
-        }
-
-        parent::__construct($model);
-    }
 
 }
