@@ -15,17 +15,11 @@ $storage = $payum->getStorage($paymentClass);
 
 $payment = $storage->create();
 
-$payment->setNumber(uniqid());
 $payment->setCurrencyCode('HUF');
-$payment->setTotalAmount(123);
-$payment->setDescription('A description');
-$payment->setClientId('anId');
-$payment->setClientEmail('foo@example.com');
-
-$payment->setDetails(array(
-    
-));
-
+$payment->setTotalAmount(543);
+$payment->setDescription('Hat ez egy uj fizetes lesz, gyurikam');
+$payment->setClientId('2345');
+$payment->setClientEmail('mikulas@beles.com');
 
 $storage->update($payment);
 

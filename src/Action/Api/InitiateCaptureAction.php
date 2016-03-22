@@ -37,39 +37,23 @@ class InitiateCaptureAction extends AbstractApiAwareAction
         $details = ArrayObject::ensureArrayObject($request->getModel());
 
         $transactionIdGenerator = new TransactionIdGenerator();
-        $transactionId = $transactionIdGenerator->generate('POTPTEST');
+        $transactionId = $transactionIdGenerator->generate('POTPTEST'); //THIS SHOULD BE CONFIGURABLE
 
-        $response = $this->api->capture(
-            $details['shopId'],
-            $transactionId,
-            69,
-            "HUF",
-            "hu",
-            RequestUtils::safeParam($_REQUEST, 'nevKell'),
-            RequestUtils::safeParam($_REQUEST, 'orszagKell'),
-            RequestUtils::safeParam($_REQUEST, 'megyeKell'),
-            RequestUtils::safeParam($_REQUEST, 'telepulesKell'),
-            RequestUtils::safeParam($_REQUEST, 'iranyitoszamKell'),
-            RequestUtils::safeParam($_REQUEST, 'utcaHazszamKell'),
-            RequestUtils::safeParam($_REQUEST, 'mailCimKell'),
-            RequestUtils::safeParam($_REQUEST, 'kozlemenyKell'),
-            RequestUtils::safeParam($_REQUEST, 'vevoVisszaigazolasKell'),
-            RequestUtils::safeParam($_REQUEST, 'ugyfelRegisztracioKell'),
-            RequestUtils::safeParam($_REQUEST, 'regisztraltUgyfelId'),
-            "Valami megjegyzes",
-            $request->getBackUrl(),
-            RequestUtils::safeParam($_REQUEST, 'zsebAzonosito'),
-            RequestUtils::safeParam($_REQUEST, "ketlepcsosFizetes")
-        );
+        $details['azonosito'] = $transactionId;
 
+        $response = $this->api->capture($details, $request->getBackUrl());
 
         if ($response->isSuccessful()) {
 
             $details['status'] = GetHumanStatus::STATUS_PENDING;
             $details['captureInstanceId'] = $response->getInstanceId();
 
-            $url = sprintf('https://www.otpbankdirekt.hu/webshop/do/webShopVasarlasInditas?posId=%s&azonosito=%s', urlencode($details['shopId']), urlencode($transactionId));
+            $url = sprintf('https://www.otpbankdirekt.hu/webshop/do/webShopVasarlasInditas?posId=%s&azonosito=%s', urlencode($details['posId']), urlencode($details['azonosito']));
             throw new HttpRedirect($url);
+        } else {
+            //TOREVIEW
+            $details['status'] = GetHumanStatus::STATUS_FAILED;
+            $details['errors'] = $response->getErrors();
         }
     }
 

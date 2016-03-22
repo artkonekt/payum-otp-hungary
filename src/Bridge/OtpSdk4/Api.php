@@ -12,6 +12,8 @@
 
 namespace Konekt\PayumOtp\Bridge\OtpSdk4;
 
+use RequestUtils;
+
 class Api
 {
     private $originalErrorReporting;
@@ -44,53 +46,37 @@ class Api
 
     }
 
-    public function generateTransactionId($shopId)
+    public function generateTransactionId($posId)
     {
-        return $this->service->tranzakcioAzonositoGeneralas($shopId);
+        return $this->service->tranzakcioAzonositoGeneralas($posId);
     }
 
-    public function capture($posId,
-                            $azonosito,
-                            $osszeg,
-                            $devizanem,
-                            $nyelvkod,
-                            $nevKell,
-                            $orszagKell,
-                            $megyeKell,
-                            $telepulesKell,
-                            $iranyitoszamKell,
-                            $utcaHazszamKell,
-                            $mailCimKell,
-                            $kozlemenyKell,
-                            $vevoVisszaigazolasKell,
-                            $ugyfelRegisztracioKell,
-                            $regisztraltUgyfelId,
-                            $shopMegjegyzes,
-                            $backURL,
-                            $zsebAzonosito,
-                            $ketlepcsosFizetes = NULL)
+    public function capture($details, $backUrl)
     {
         $this->suppressLibraryErrors();
 
-        $result = $this->service->fizetesiTranzakcio($posId,
-            $azonosito,
-            $osszeg,
-            $devizanem,
-            $nyelvkod,
-            $nevKell,
-            $orszagKell,
-            $megyeKell,
-            $telepulesKell,
-            $iranyitoszamKell,
-            $utcaHazszamKell,
-            $mailCimKell,
-            $kozlemenyKell,
-            $vevoVisszaigazolasKell,
-            $ugyfelRegisztracioKell,
-            $regisztraltUgyfelId,
-            $shopMegjegyzes,
-            $backURL,
-            $zsebAzonosito);
+        $result = $this->service->fizetesiTranzakcio(
+            $details['posId'],
+            $details['azonosito'],
+            $details['osszeg'],
+            $details['devizanem'],
+            "hu",
+            RequestUtils::safeParam($_REQUEST, 'nevKell'),
+            RequestUtils::safeParam($_REQUEST, 'orszagKell'),
+            RequestUtils::safeParam($_REQUEST, 'megyeKell'),
+            RequestUtils::safeParam($_REQUEST, 'telepulesKell'),
+            RequestUtils::safeParam($_REQUEST, 'iranyitoszamKell'),
+            RequestUtils::safeParam($_REQUEST, 'utcaHazszamKell'),
+            RequestUtils::safeParam($_REQUEST, 'mailCimKell'),
+            RequestUtils::safeParam($_REQUEST, 'kozlemenyKell'),
+            RequestUtils::safeParam($_REQUEST, 'vevoVisszaigazolasKell'),
+            RequestUtils::safeParam($_REQUEST, 'ugyfelRegisztracioKell'),
+            RequestUtils::safeParam($_REQUEST, 'regisztraltUgyfelId'),
+            $details['shopMegjegyzes'],
+            $backUrl,
+            RequestUtils::safeParam($_REQUEST, 'zsebAzonosito'),
+            RequestUtils::safeParam($_REQUEST, "ketlepcsosFizetes")
+        );
 
         $this->restoreErrorReporting();
 

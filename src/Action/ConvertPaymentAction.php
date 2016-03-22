@@ -20,14 +20,17 @@ class ConvertPaymentAction extends GatewayAwareAction
     {
         RequestNotSupportedException::assertSupports($this, $request);
 
-        ///** @var PaymentInterface $payment */
-        //$payment = $request->getSource();
+        /** @var PaymentInterface $payment */
+        $payment = $request->getSource();
 
         $details = [];
-        $details['shopId'] = '#02299991';
+        
+        $details['posId'] = '#02299991'; //THIS SHOULD B CONFIGURABEL (sandbox etc.)
+        $details['osszeg'] = $payment->getTotalAmount();
+        $details['devizanem'] = $payment->getCurrencyCode();
+        $details['shopMegjegyzes'] = $payment->getDescription();
 
         $request->setResult($details);
-        //throw new \LogicException('Not implemented');
     }
 
     /**
