@@ -20,11 +20,11 @@ class ConvertPaymentAction extends GatewayAwareAction
     {
         RequestNotSupportedException::assertSupports($this, $request);
 
-        /** @var PaymentInterface $payment */
-        $payment = $request->getSource();
+        ///** @var PaymentInterface $payment */
+        //$payment = $request->getSource();
 
-        
-        $details['etwas'] = 'valami';
+        $details = [];
+        $details['shopId'] = '#02299991';
 
         $request->setResult($details);
         //throw new \LogicException('Not implemented');

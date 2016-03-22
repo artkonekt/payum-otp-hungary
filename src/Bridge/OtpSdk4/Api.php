@@ -18,14 +18,16 @@ class Api
 
     private $service;
 
-    public function __construct($config, $sdkService = null)
+    private $configurator;
+
+    public function __construct(Configurator $configurator, $sdkService = null)
     {
-        $configurator = new Configurator($config);
+        $this->configurator = $configurator;
 
         $this->suppressLibraryErrors();
 
         if (!$sdkService) {
-            $serviceName = $configurator->getMainServiceFile();
+            $serviceName = $this->configurator->getMainServiceFile();
             //There is no autoloading in the SDK, we need to include the class file
             require_once($serviceName);
 

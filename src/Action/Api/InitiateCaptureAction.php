@@ -13,6 +13,7 @@
 
 namespace Konekt\PayumOtp\Action\Api;
 
+use Konekt\PayumOtp\Bridge\OtpSdk4\Util\TransactionIdGenerator;
 use Konekt\PayumOtp\Request\Api\Capture;
 use Konekt\PayumOtp\Request\Api\InitiateCapture;
 use Payum\Core\Bridge\Spl\ArrayObject;
@@ -35,15 +36,12 @@ class InitiateCaptureAction extends AbstractApiAwareAction
 
         $details = ArrayObject::ensureArrayObject($request->getModel());
 
-        $shopId = '#02299991';
-        $transId = uniqid('POTPTEST');
-
-        $details['shopId'] = $shopId;
-        $details['transId'] = $transId;
+        $transactionIdGenerator = new TransactionIdGenerator();
+        $transactionId = $transactionIdGenerator->generate('POTPTEST');
 
         $response = $this->api->capture(
-            $shopId,
-            $transId,
+            $details['shopId'],
+            $transactionId,
             69,
             "HUF",
             "hu",
@@ -59,7 +57,7 @@ class InitiateCaptureAction extends AbstractApiAwareAction
             RequestUtils::safeParam($_REQUEST, 'ugyfelRegisztracioKell'),
             RequestUtils::safeParam($_REQUEST, 'regisztraltUgyfelId'),
             "Valami megjegyzes",
-            $details['backUrl'],
+            $request->getBackUrl(),
             RequestUtils::safeParam($_REQUEST, 'zsebAzonosito'),
             RequestUtils::safeParam($_REQUEST, "ketlepcsosFizetes")
         );
@@ -70,7 +68,7 @@ class InitiateCaptureAction extends AbstractApiAwareAction
             $details['status'] = GetHumanStatus::STATUS_PENDING;
             $details['captureInstanceId'] = $response->getInstanceId();
 
-            $url = sprintf('https://www.otpbankdirekt.hu/webshop/do/webShopVasarlasInditas?posId=%s&azonosito=%s', urlencode($shopId), urlencode($transId));
+            $url = sprintf('https://www.otpbankdirekt.hu/webshop/do/webShopVasarlasInditas?posId=%s&azonosito=%s', urlencode($details['shopId']), urlencode($transactionId));
             throw new HttpRedirect($url);
         }
     }

@@ -12,7 +12,6 @@
 
 namespace Konekt\PayumOtp\Action\Api;
 
-
 use Konekt\PayumOtp\Bridge\OtpSdk4\Api;
 use Payum\Core\Action\ActionInterface;
 use Payum\Core\ApiAwareInterface;
@@ -28,7 +27,7 @@ abstract class AbstractApiAwareAction implements ActionInterface, ApiAwareInterf
     public function setApi($api)
     {
         if (false == $api instanceof Api) {
-            throw new UnsupportedApiException('Not supported. Expected Payum\Klarna\Checkout\Config instance to be set as api.');
+            throw new UnsupportedApiException('Not supported. Expected \Konekt\PayumOtp\Bridge\OtpSdk4\Api instance to be set as api.');
         }
 
         $this->api = $api;

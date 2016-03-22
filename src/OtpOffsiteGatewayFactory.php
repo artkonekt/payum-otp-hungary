@@ -12,6 +12,7 @@ use Konekt\PayumOtp\Action\NotifyAction;
 use Konekt\PayumOtp\Action\RefundAction;
 use Konekt\PayumOtp\Action\StatusAction;
 use Konekt\PayumOtp\Bridge\OtpSdk4\Api;
+use Konekt\PayumOtp\Bridge\OtpSdk4\Configurator;
 use Konekt\PayumOtp\Request\Api\Capture;
 use Payum\Core\Bridge\Spl\ArrayObject;
 use Payum\Core\GatewayFactory;
@@ -47,7 +48,7 @@ class OtpOffsiteGatewayFactory extends GatewayFactory
             $config['payum.api'] = function (ArrayObject $config) {
                 $config->validateNotEmpty($config['payum.required_options']);
 
-                return new Api((array) $config);
+                return new Api(new Configurator((array) $config));
             };
         }
     }

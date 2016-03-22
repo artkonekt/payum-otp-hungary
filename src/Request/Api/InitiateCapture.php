@@ -17,5 +17,19 @@ use Payum\Core\Request\Generic;
 
 class InitiateCapture extends Generic
 {
+    private $backUrl;
 
+    public function __construct($model, $backUrl)
+    {
+        $this->backUrl = $backUrl;
+        parent::__construct($model);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBackUrl()
+    {
+        return $this->backUrl;
+    }
 }
