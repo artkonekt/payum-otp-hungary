@@ -20,7 +20,6 @@ use Payum\Core\Bridge\Spl\ArrayObject;
 use Payum\Core\Exception\RequestNotSupportedException;
 use Payum\Core\Reply\HttpRedirect;
 use Payum\Core\Request\GetHumanStatus;
-use RequestUtils;
 
 class InitiateCaptureAction extends AbstractApiAwareAction
 {

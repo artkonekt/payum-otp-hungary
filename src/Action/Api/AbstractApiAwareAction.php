@@ -14,10 +14,11 @@ namespace Konekt\PayumOtp\Action\Api;
 
 use Konekt\PayumOtp\Bridge\OtpSdk4\Api;
 use Payum\Core\Action\ActionInterface;
+use Payum\Core\Action\GatewayAwareAction;
 use Payum\Core\ApiAwareInterface;
 use Payum\Core\Exception\UnsupportedApiException;
 
-abstract class AbstractApiAwareAction implements ActionInterface, ApiAwareInterface
+abstract class AbstractApiAwareAction extends GatewayAwareAction implements ActionInterface, ApiAwareInterface
 {
     protected $api;
 

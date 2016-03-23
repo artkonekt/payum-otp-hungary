@@ -1,14 +1,14 @@
 <?php
 namespace Konekt\PayumOtp\Action;
 
+use Konekt\PayumOtp\Action\Api\AbstractApiAwareAction;
 use Konekt\PayumOtp\Request\Api\FetchCaptureResult;
 use Konekt\PayumOtp\Request\Api\InitiateCapture;
-use Payum\Core\Action\GatewayAwareAction;
-use Payum\Core\Request\Capture;
 use Payum\Core\Exception\RequestNotSupportedException;
+use Payum\Core\Request\Capture;
 use Payum\Core\Request\GetHumanStatus;
 
-class CaptureAction extends GatewayAwareAction
+class CaptureAction extends AbstractApiAwareAction
 {
     /**
      * {@inheritDoc}
