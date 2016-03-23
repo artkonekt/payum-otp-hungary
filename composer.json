@@ -10,7 +10,7 @@
         }
     ],
     "require": {
-        "payum/payum": "~1.0"
+        "payum/core": "~1.0"
     },
     "require-dev": {
         "phpspec/phpspec": "~2.0",
