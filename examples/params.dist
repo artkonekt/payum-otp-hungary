@@ -3,8 +3,8 @@
 $basePrefixPath = 'TODO';
 
 $params = [
-    'payum.api.sdkDir' => 'PUT HERE THE DIRECTORY WHERE YOUR SKD LIB LIVES',
-    'payum.api.privateKeyFile' => 'PATH TO THE PRIVATE KEY',
+    'sdk_dir' => 'PUT HERE THE DIRECTORY WHERE YOUR SKD LIBRARY LIVES',
+    'secret_key' => 'PATH TO THE PRIVATE KEY',
 
     'payum.api.transactionLogDir' => 'PATH TO THE TRANSACTION LOG DIR',
     'payum.api.transactionLogDir.success' => 'PATH TO THE SUCCESSFUL TRANSACTION LOG DIR',
