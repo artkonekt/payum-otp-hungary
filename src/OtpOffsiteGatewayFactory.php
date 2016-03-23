@@ -25,8 +25,8 @@ class OtpOffsiteGatewayFactory extends GatewayFactory
     protected function populateConfig(ArrayObject $config)
     {
         $config->defaults([
-            'payum.factory_name' => 'otp_offsite',
-            'payum.factory_title' => 'Otp Offsite',
+            'payum.factory_name' => 'otp_hungary_offsite',
+            'payum.factory_title' => 'Otp Hungary Offsite',
             'payum.action.capture' => new CaptureAction(),
             'payum.action.status' => new StatusAction(),
             'payum.action.convert_payment' => new ConvertPaymentAction(),
@@ -41,8 +41,8 @@ class OtpOffsiteGatewayFactory extends GatewayFactory
             );
             $config->defaults($config['payum.default_options']);
             $config['payum.required_options'] = [
-                'payum.api.privateKeyFile',
-                'payum.api.sdkDir'
+                'secret_key',
+                'sdk_dir'
             ];
 
             $config['payum.api'] = function (ArrayObject $config) {

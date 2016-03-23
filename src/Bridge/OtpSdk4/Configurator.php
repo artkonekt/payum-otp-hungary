@@ -22,8 +22,8 @@ class Configurator
     public function __construct($config)
     {
 
-        $this->privateKeyFileName = $config['payum.api.privateKeyFile'];
-        $this->sdkLibDir = $config['payum.api.sdkDir'] . '/lib';
+        $this->privateKeyFileName = $config['secret_key'];
+        $this->sdkLibDir = $config['sdk_dir'] . '/lib';
 
 
         $confFileDir = sys_get_temp_dir();
@@ -43,12 +43,23 @@ class Configurator
         $contents = preg_replace('/otp\.webshop\.PRIVATE_KEY_FILE_#02299991=.*/', 'otp.webshop.PRIVATE_KEY_FILE_#02299991=' . $this->privateKeyFileName, $contents);
 
         //log directory for the transactions keyfile config
-        $contents = preg_replace('/otp\.webshop\.TRANSACTION_LOG_DIR=.*/', 'otp.webshop.TRANSACTION_LOG_DIR=' . $config['payum.api.transactionLogDir'], $contents);
-        $contents = preg_replace('/otp\.webshop\.transaction_log_dir\.SUCCESS_DIR=.*/', 'otp.webshop.transaction_log_dir.SUCCESS_DIR=' . $config['payum.api.transactionLogDir.success'], $contents);
-        $contents = preg_replace('/otp\.webshop\.transaction_log_dir\.FAILED_DIR=.*/', 'otp.webshop.transaction_log_dir.FAILED_DIR=' . $config['payum.api.transactionLogDir.failed'], $contents);
+        if (isset($config['payum.api.transactionLogDir'])) {
+            $contents = preg_replace('/otp\.webshop\.TRANSACTION_LOG_DIR=.*/', 'otp.webshop.TRANSACTION_LOG_DIR=' . $config['payum.api.transactionLogDir'], $contents);
+        }
+
+        if (isset($config['payum.api.transactionLogDir.success'])) {
+            $contents = preg_replace('/otp\.webshop\.transaction_log_dir\.SUCCESS_DIR=.*/', 'otp.webshop.transaction_log_dir.SUCCESS_DIR=' . $config['payum.api.transactionLogDir.success'], $contents);
+        }
+
+        if (isset($config['payum.api.transactionLogDir.failed'])) {
+            $contents = preg_replace('/otp\.webshop\.transaction_log_dir\.FAILED_DIR=.*/', 'otp.webshop.transaction_log_dir.FAILED_DIR=' . $config['payum.api.transactionLogDir.failed'], $contents);
+        }
 
         //log directory for the webshopclient
-        $contents = preg_replace('/log4php\.appender\.WebShopClient\.File=.*/', 'log4php.appender.WebShopClient.File=' . $config['payum.api.log4php.file'], $contents);
+
+        if (isset($config['payum.api.log4php.file'])) {
+            $contents = preg_replace('/log4php\.appender\.WebShopClient\.File=.*/', 'log4php.appender.WebShopClient.File=' . $config['payum.api.log4php.file'], $contents);
+        }
 
         file_put_contents($dir  . '/' . self::CONFIG_FILE_NAME, $contents);
 
