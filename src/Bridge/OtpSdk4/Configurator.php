@@ -16,15 +16,17 @@ class Configurator
 {
     private $sdkLibDir;
     private $privateKeyFileName;
+    private $posId;
+
+
 
     const CONFIG_FILE_NAME = 'otp_webshop_client.conf';
 
     public function __construct($config)
     {
-
         $this->privateKeyFileName = $config['secret_key'];
         $this->sdkLibDir = $config['sdk_dir'] . '/lib';
-
+        $this->posId = $config['pos_id'];
 
         $confFileDir = sys_get_temp_dir();
         $this->generateConfigFile($confFileDir, $config);
@@ -43,22 +45,22 @@ class Configurator
         $contents = preg_replace('/otp\.webshop\.PRIVATE_KEY_FILE_#02299991=.*/', 'otp.webshop.PRIVATE_KEY_FILE_#02299991=' . $this->privateKeyFileName, $contents);
 
         //log directory for the transactions keyfile config
-        if (isset($config['payum.api.transactionLogDir'])) {
-            $contents = preg_replace('/otp\.webshop\.TRANSACTION_LOG_DIR=.*/', 'otp.webshop.TRANSACTION_LOG_DIR=' . $config['payum.api.transactionLogDir'], $contents);
+        if (isset($config['sdk_transaction_log_dir'])) {
+            $contents = preg_replace('/otp\.webshop\.sdk_transaction_log_dir=.*/', 'otp.webshop.sdk_transaction_log_dir=' . $config['sdk_transaction_log_dir'], $contents);
         }
 
-        if (isset($config['payum.api.transactionLogDir.success'])) {
-            $contents = preg_replace('/otp\.webshop\.transaction_log_dir\.SUCCESS_DIR=.*/', 'otp.webshop.transaction_log_dir.SUCCESS_DIR=' . $config['payum.api.transactionLogDir.success'], $contents);
+        if (isset($config['sdk_transaction_log_dir.success'])) {
+            $contents = preg_replace('/otp\.webshop\.sdk_transaction_log_dir\.SUCCESS_DIR=.*/', 'otp.webshop.sdk_transaction_log_dir.SUCCESS_DIR=' . $config['sdk_transaction_log_dir.success'], $contents);
         }
 
-        if (isset($config['payum.api.transactionLogDir.failed'])) {
-            $contents = preg_replace('/otp\.webshop\.transaction_log_dir\.FAILED_DIR=.*/', 'otp.webshop.transaction_log_dir.FAILED_DIR=' . $config['payum.api.transactionLogDir.failed'], $contents);
+        if (isset($config['sdk_transaction_log_dir.failed'])) {
+            $contents = preg_replace('/otp\.webshop\.sdk_transaction_log_dir\.FAILED_DIR=.*/', 'otp.webshop.sdk_transaction_log_dir.FAILED_DIR=' . $config['sdk_transaction_log_dir.failed'], $contents);
         }
 
         //log directory for the webshopclient
 
-        if (isset($config['payum.api.log4php.file'])) {
-            $contents = preg_replace('/log4php\.appender\.WebShopClient\.File=.*/', 'log4php.appender.WebShopClient.File=' . $config['payum.api.log4php.file'], $contents);
+        if (isset($config['sdk_log4php_file'])) {
+            $contents = preg_replace('/log4php\.appender\.WebShopClient\.File=.*/', 'log4php.appender.WebShopClient.File=' . $config['sdk_log4php_file'], $contents);
         }
 
         file_put_contents($dir  . '/' . self::CONFIG_FILE_NAME, $contents);
@@ -69,5 +71,13 @@ class Configurator
     public function getMainServiceFile()
     {
         return $this->sdkLibDir . '/iqsys/otpwebshop/WebShopService.php';
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPosId()
+    {
+        return $this->posId;
     }
 }

@@ -25,7 +25,6 @@ class ConvertPaymentAction extends GatewayAwareAction
 
         $details = [];
         
-        $details['posId'] = '#02299991'; //THIS SHOULD B CONFIGURABEL (sandbox etc.)
         $details['osszeg'] = $payment->getTotalAmount();
         $details['devizanem'] = $payment->getCurrencyCode();
         $details['shopMegjegyzes'] = $payment->getDescription();

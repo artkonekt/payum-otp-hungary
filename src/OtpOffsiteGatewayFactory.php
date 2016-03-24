@@ -39,11 +39,22 @@ class OtpOffsiteGatewayFactory extends GatewayFactory
             $config['payum.default_options'] = array(
                 'sandbox' => true,
             );
+
             $config->defaults($config['payum.default_options']);
-            $config['payum.required_options'] = [
-                'secret_key',
-                'sdk_dir'
+
+            $requiredOptions = [
+                'sdk_dir',
+                'pos_id'
             ];
+
+            if (true === $config['sandbox']) {
+                $config['secret_key'] = __DIR__ . '/../data/#02299991.privKey.pem';
+                $config['pos_id'] = '#02299991';
+            } else {
+                $requiredOptions[] = 'secret_key';
+            }
+
+            $config['payum.required_options'] = $requiredOptions;
 
             $config['payum.api'] = function (ArrayObject $config) {
                 $config->validateNotEmpty($config['payum.required_options']);

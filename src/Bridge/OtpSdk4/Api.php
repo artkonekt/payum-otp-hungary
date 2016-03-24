@@ -41,13 +41,9 @@ class Api
         $this->restoreErrorReporting();
     }
 
-    public function setSandbox()
+    public function generateTransactionId()
     {
-
-    }
-
-    public function generateTransactionId($posId)
-    {
+        $posId = $this->getPosId();
         return $this->service->tranzakcioAzonositoGeneralas($posId);
     }
 
@@ -56,7 +52,7 @@ class Api
         $this->suppressLibraryErrors();
 
         $result = $this->service->fizetesiTranzakcio(
-            $details['posId'],
+            $this->getPosId(),
             $details['azonosito'],
             $details['osszeg'],
             $details['devizanem'],
@@ -83,15 +79,14 @@ class Api
         return $result;
     }
 
-    public function getTransactionStatus($posId,
-                                    $azonosito,
+    public function getTransactionStatus($azonosito,
                                     $maxRekordSzam,
                                     $idoszakEleje,
                                     $idoszakVege)
     {
         $this->suppressLibraryErrors();
 
-        return $this->service->tranzakcioStatuszLekerdezes($posId,
+        return $this->service->tranzakcioStatuszLekerdezes($this->configurator->getPosId(),
             $azonosito,
             $maxRekordSzam,
             $idoszakEleje,
@@ -109,5 +104,10 @@ class Api
     private function restoreErrorReporting()
     {
         error_reporting($this->originalErrorReporting);
+    }
+
+    public function getPosId()
+    {
+        return $this->configurator->getPosId();
     }
 }

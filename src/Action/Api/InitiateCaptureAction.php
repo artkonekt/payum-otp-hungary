@@ -47,7 +47,7 @@ class InitiateCaptureAction extends AbstractApiAwareAction
             $details['status'] = GetHumanStatus::STATUS_PENDING;
             $details['captureInstanceId'] = $response->getInstanceId();
 
-            $url = sprintf('https://www.otpbankdirekt.hu/webshop/do/webShopVasarlasInditas?posId=%s&azonosito=%s', urlencode($details['posId']), urlencode($details['azonosito']));
+            $url = sprintf('https://www.otpbankdirekt.hu/webshop/do/webShopVasarlasInditas?posId=%s&azonosito=%s', urlencode($this->api->getPosId()), urlencode($details['azonosito']));
             throw new HttpRedirect($url);
         } else {
             //TOREVIEW
