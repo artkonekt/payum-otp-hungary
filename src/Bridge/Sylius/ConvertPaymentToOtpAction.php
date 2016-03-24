@@ -48,7 +48,7 @@ class ConvertPaymentToOtpAction extends GatewayAwareAction
         $order = $payment->getOrder();
 
         $details = [];
-        $details['osszeg'] = ($order->getTotal() + 12) / 100;
+        $details['osszeg'] = $order->getTotal() / 100;
         $details['devizanem'] = $payment->getCurrency();
         
         if ($this->paymentNoteProvider) {
