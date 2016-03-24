@@ -32,8 +32,10 @@ class OtpHungaryOffsiteGatewayFactory extends AbstractGatewayFactory
     {
         parent::addConfiguration($builder);
         $builder->children()
-            ->scalarNode('secret_key')->isRequired()->cannotBeEmpty()->end()
+            ->booleanNode('sandbox')->defaultTrue()->end()
             ->scalarNode('sdk_dir')->isRequired()->cannotBeEmpty()->end()
+            ->scalarNode('secret_key')->isRequired()->cannotBeEmpty()->end()
+            ->scalarNode('pos_id')->isRequired()->cannotBeEmpty()->end()
             ->end();
     }
 
