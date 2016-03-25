@@ -10,7 +10,7 @@ a single shop (no multishop support). Feel free to contribute or ask for support
 
 The library builds on top of OTP's official SDK. It hides some of the library's inconveniences, like having to edit a 
 configuration file, no autoloading, messy warnings/notices and no support for PHP7.
-The official SDK's loggin 
+The official SDK's logging features work as they provide it.
 
 You will have to download the SDK [from OTP's site](https://www.otpbank.hu/portal/hu/Kartyaelfogadas/Webshop) in order to
 be able to use the library.
@@ -46,6 +46,9 @@ You will find the parameters you will have to configure in ```examples/params.di
 * secret_key: The full path to the secret key file belonging to the shop id given to you by OTP. Mandatory when not in sandbox mode.
 * transactionid_prefix:  For each payment the library generates a unique ID, you can specify any prefix to it here. It should be 
  no more than 10 characters and should be alphanumeric.
+ 
+In addition you can configure the log dirs where the SDK will log the transactions. You will find the details in the SDK official documentation
+about each directory.
  
 ## Using the library with Sylius
 
