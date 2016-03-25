@@ -23,7 +23,10 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class ErrorNotifierExtension implements ExtensionInterface
 {
-    private $errors;
+    /**
+     * @var array
+     */
+    private $details;
 
     /**
      * @var EventDispatcherInterface
@@ -70,11 +73,11 @@ class ErrorNotifierExtension implements ExtensionInterface
         $details = ArrayObject::ensureArrayObject($model);
 
         if (isset($details['errors'])) {
-            $this->errors = $details['errors'];
+            $this->details = $details;
         }
 
-        if ($this->errors && !$context->getPrevious()) {
-            $this->eventDispatcher->dispatch(OtpEvents::TRANSACTION_ERROR, new TransactionError($this->errors, (array) $details));
+        if ($this->details && !$context->getPrevious()) {
+            $this->eventDispatcher->dispatch(OtpEvents::TRANSACTION_ERROR, new TransactionError($this->details));
         }
     }
 }
