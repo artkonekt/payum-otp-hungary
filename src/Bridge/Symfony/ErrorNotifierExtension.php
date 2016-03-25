@@ -73,8 +73,8 @@ class ErrorNotifierExtension implements ExtensionInterface
             $this->errors = $details['errors'];
         }
 
-        if ($this->errors && (false === $context->getPrevious())) {
-            $this->eventDispatcher->dispatch(OtpEvents::TRANSACTION_ERROR, new TransactionError($this->errors));
+        if ($this->errors && !$context->getPrevious()) {
+            $this->eventDispatcher->dispatch(OtpEvents::TRANSACTION_ERROR, new TransactionError($this->errors, (array) $details));
         }
     }
 }

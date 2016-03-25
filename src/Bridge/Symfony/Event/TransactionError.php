@@ -26,11 +26,17 @@ class TransactionError extends Event
     private $errors;
 
     /**
+     * @var array
+     */
+    private $details;
+
+    /**
      * TransactionError constructor.
      *
-     * @param array $errors
+     * @param array $errors The errors array
+     * @param array $details All OTP payment details
      */
-    public function __construct($errors)
+    public function __construct($errors, $details)
     {
         $this->errors = $errors;
     }
@@ -41,5 +47,13 @@ class TransactionError extends Event
     public function getErrors()
     {
         return $this->errors;
+    }
+
+    /**
+     * @return array
+     */
+    public function getDetails()
+    {
+        return $this->details;
     }
 }
