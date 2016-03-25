@@ -2,7 +2,7 @@
     "name": "konekt/payum-otp-hungary",
     "type": "library",
     "description": "Custom Payum gateway for OTP Bank - Hungary.",
-    "keywords": ["payment", "otp", "payum"],
+    "keywords": ["payment", "otp", "payum", "symfony", "sylius"],
     "license": "MIT",
     "authors": [
         {

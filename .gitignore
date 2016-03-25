@@ -3,5 +3,5 @@ bin
 composer.lock
 .idea
 var
-docs
+docs/
 examples/params.php

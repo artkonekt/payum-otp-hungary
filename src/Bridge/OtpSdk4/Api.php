@@ -52,8 +52,7 @@ class Api
         $serviceName = $this->configurator->getMainServiceFile();
         //There is no autoloading in the SDK, we need to include the class file
         require_once($serviceName);
-
-        //original SDK checksum(md5sum): aae7d5f60a87511a685767f26b8af4ca
+        
         //TODO: relocate this to the documentation
         $this->suppressLibraryErrors();
         $this->service = new \WebShopService();

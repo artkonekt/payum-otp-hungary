@@ -3,7 +3,9 @@
 $basePrefixPath = 'THE BASE PATH OF THE ACTION SCRIPTS';
 
 $params = [
+    'sandbox' => true | false,
     'sdk_dir' => 'PUT HERE THE DIRECTORY WHERE YOUR SKD LIBRARY LIVES',
+    'pos_id' => 'your shop id, provided by OTP'
     'secret_key' => 'PATH TO THE PRIVATE KEY',
     'transactionid_prefix' => 'OPTIONAL'
 
