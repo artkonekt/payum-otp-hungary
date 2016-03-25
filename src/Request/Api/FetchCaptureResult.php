@@ -12,9 +12,11 @@
 
 namespace Konekt\PayumOtp\Request\Api;
 
-
 use Payum\Core\Request\Generic;
 
+/**
+ * Request class for the capture result fetching.
+ */
 class FetchCaptureResult extends Generic
 {
 

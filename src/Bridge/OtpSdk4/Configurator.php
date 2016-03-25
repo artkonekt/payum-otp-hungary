@@ -12,15 +12,44 @@
 
 namespace Konekt\PayumOtp\Bridge\OtpSdk4;
 
+/**
+ * Class Configurator.
+ *
+ * Abstracts the configuration of the gateway and provides a mechanism which simplifies OTP's SDK configuration. The
+ * SDK requires to configuration files and define some constants. The class does this for you, so you can configure the
+ * gateway in the Payum way, through a configuration array.
+ *
+ * TODO: refactor (SRP)
+ */
 class Configurator
 {
-    private $sdkLibDir;
-    private $privateKeyFileName;
-    private $posId;
-    private $transactionIdPrefix;
-
     const CONFIG_FILE_NAME = 'otp_webshop_client.conf';
 
+    /**
+     * @var string The directory of the SDK dir
+     */
+    private $sdkLibDir;
+
+    /**
+     * @var string The private key file
+     */
+    private $privateKeyFileName;
+
+    /**
+     * @var string The pos_id for which you make the payment (aka. SHOP ID)
+     */
+    private $posId;
+
+    /**
+     * @var string The prefix for the unique ID generated for each capture.
+     */
+    private $transactionIdPrefix;
+
+    /**
+     * Configurator constructor.
+     *
+     * @param array $config
+     */
     public function __construct($config)
     {
         $this->privateKeyFileName = $config['secret_key'];
@@ -28,17 +57,23 @@ class Configurator
         $this->posId = $config['pos_id'];
         $this->transactionIdPrefix = $config['transactionid_prefix'];
 
+        //the config file used by the SDK will be in the temp dir
         $confFileDir = sys_get_temp_dir();
         $this->generateConfigFile($confFileDir, $config);
 
-        define('WEBSHOP_LIB_DIR', $this->sdkLibDir);
-        define('WEBSHOP_CONF_DIR', $confFileDir);
-        define('WS_CUSTOMERPAGE_CHAR_ENCODING', 'UTF-8');
+        $this->defineSdkConstants($confFileDir);
     }
 
+    /**
+     * Generates the config file used by the SDK with the values given in the configuration of the gateway.
+     *
+     * @param string $dir    The destination directory of the generated config file.
+     *
+     * @param array  $config The gateway's configuration
+     */
     private function generateConfigFile($dir, $config)
     {
-        $originalConfigFile = $this->sdkLibDir .'/../config/' . self::CONFIG_FILE_NAME;
+        $originalConfigFile = $this->sdkLibDir . '/../config/' . self::CONFIG_FILE_NAME;
 
         $contents = file_get_contents($originalConfigFile);
 
@@ -64,17 +99,24 @@ class Configurator
             $contents = preg_replace('/log4php\.appender\.WebShopClient\.File=.*/', 'log4php.appender.WebShopClient.File=' . $config['sdk_log4php_file'], $contents);
         }
 
-        file_put_contents($dir  . '/' . self::CONFIG_FILE_NAME, $contents);
+        file_put_contents($dir . '/' . self::CONFIG_FILE_NAME, $contents);
 
 
     }
 
+    /**
+     * Returns the full path to the SDK's service file.
+     *
+     * @return string
+     */
     public function getMainServiceFile()
     {
         return $this->sdkLibDir . '/iqsys/otpwebshop/WebShopService.php';
     }
 
     /**
+     * Returns the pos_id (aka. shop id)
+     *
      * @return mixed
      */
     public function getPosId()
@@ -94,8 +136,25 @@ class Configurator
         return true;
     }
 
+    /**
+     * Returns the prefix of the unique transaction ID.
+     *
+     * @return string
+     */
     public function getTransactionIdPrefix()
     {
         return $this->transactionIdPrefix;
+    }
+
+    /**
+     * Defines constants used by the SDK's code.
+     *
+     * @param string $confFileDir
+     */
+    private function defineSdkConstants($confFileDir)
+    {
+        define('WEBSHOP_LIB_DIR', $this->sdkLibDir);
+        define('WEBSHOP_CONF_DIR', $confFileDir);
+        define('WS_CUSTOMERPAGE_CHAR_ENCODING', 'UTF-8');
     }
 }

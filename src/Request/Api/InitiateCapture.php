@@ -12,13 +12,24 @@
 
 namespace Konekt\PayumOtp\Request\Api;
 
-use Payum\Core\Model\Token;
 use Payum\Core\Request\Generic;
 
+/**
+ * Request class for capture initialization.
+ */
 class InitiateCapture extends Generic
 {
+    /**
+     * @var string
+     */
     private $backUrl;
 
+    /**
+     * InitiateCapture constructor.
+     *
+     * @param mixed  $model   The payment model
+     * @param string $backUrl The URL where OTP should redirect after the client did the payment on the OTP site.
+     */
     public function __construct($model, $backUrl)
     {
         $this->backUrl = $backUrl;
@@ -26,6 +37,8 @@ class InitiateCapture extends Generic
     }
 
     /**
+     * Returns the URL where OTP should redirect after the client did the payment on the OTP site.
+     * 
      * @return mixed
      */
     public function getBackUrl()

@@ -1,15 +1,15 @@
 <?php
 
-$basePrefixPath = 'TODO';
+$basePrefixPath = 'THE BASE PATH OF THE ACTION SCRIPTS';
 
 $params = [
     'sdk_dir' => 'PUT HERE THE DIRECTORY WHERE YOUR SKD LIBRARY LIVES',
     'secret_key' => 'PATH TO THE PRIVATE KEY',
-    'transactionid_prefix' => ''
+    'transactionid_prefix' => 'OPTIONAL'
 
-    'payum.api.transactionLogDir' => 'PATH TO THE TRANSACTION LOG DIR',
-    'payum.api.transactionLogDir.success' => 'PATH TO THE SUCCESSFUL TRANSACTION LOG DIR',
-    'payum.api.transactionLogDir.failed' => 'PATH TO THE FAILED TRANSACTION LOG DIR',
+    'payum.api.transactionLogDir' => 'PATH TO THE TRANSACTION LOG DIR | OPTIONAL',
+    'payum.api.transactionLogDir.success' => 'PATH TO THE SUCCESSFUL TRANSACTION LOG DIR | OPTIONAL',
+    'payum.api.transactionLogDir.failed' => 'PATH TO THE FAILED TRANSACTION LOG DIR | OPTIONAL',
 
-    'payum.api.log4php.file' => 'PATH TO THE LOG4PHP LOG DIR'
+    'payum.api.log4php.file' => 'PATH TO THE LOG4PHP LOG DIR | OPTIONAL'
 ];

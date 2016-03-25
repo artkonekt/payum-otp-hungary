@@ -16,7 +16,7 @@ namespace Konekt\PayumOtp\Bridge\Symfony\Event;
 use Symfony\Component\EventDispatcher\Event;
 
 /**
- * Class TransactionError
+ * Event representing an OTP transaction error.
  */
 class TransactionError extends Event
 {

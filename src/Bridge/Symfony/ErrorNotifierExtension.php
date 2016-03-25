@@ -12,7 +12,6 @@
 
 namespace Konekt\PayumOtp\Bridge\Symfony;
 
-
 use Konekt\PayumOtp\Bridge\Symfony\Event\OtpEvents;
 use Konekt\PayumOtp\Bridge\Symfony\Event\TransactionError;
 use Payum\Core\Bridge\Spl\ArrayObject;
@@ -21,6 +20,9 @@ use Payum\Core\Extension\ExtensionInterface;
 use Payum\Core\Model\ModelAwareInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
+/**
+ * Extension which dispatches a Symfony event in case of a transaction error.
+ */
 class ErrorNotifierExtension implements ExtensionInterface
 {
     /**
@@ -60,6 +62,8 @@ class ErrorNotifierExtension implements ExtensionInterface
     }
 
     /**
+     * Dispatches a Symfony event in case of a transaction error.
+     *
      * @var Context $context
      */
     public function onPostExecute(Context $context)

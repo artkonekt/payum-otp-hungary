@@ -10,7 +10,7 @@ use Payum\Core\Exception\RequestNotSupportedException;
 class StatusAction implements ActionInterface
 {
     /**
-     * {@inheritDoc}
+     * Marks the request based on the model's status set in the appropriate actions.
      *
      * @param GetStatusInterface $request
      */

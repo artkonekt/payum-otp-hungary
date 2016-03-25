@@ -18,6 +18,9 @@ use Payum\Core\Action\GatewayAwareAction;
 use Payum\Core\ApiAwareInterface;
 use Payum\Core\Exception\UnsupportedApiException;
 
+/**
+ * Base class for all API (SDK) aware actions.
+ */
 abstract class AbstractApiAwareAction extends GatewayAwareAction implements ActionInterface, ApiAwareInterface
 {
     protected $api;

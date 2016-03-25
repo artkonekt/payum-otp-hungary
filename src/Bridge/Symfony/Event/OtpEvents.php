@@ -12,8 +12,13 @@
 
 namespace Konekt\PayumOtp\Bridge\Symfony\Event;
 
-
+/**
+ * Class OtpEvents
+ */
 final class OtpEvents
 {
+    /**
+     * An OTP transaction error.
+     */
     const TRANSACTION_ERROR = 'payum.otp.transaction_error';
 }

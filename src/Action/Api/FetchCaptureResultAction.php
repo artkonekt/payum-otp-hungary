@@ -20,8 +20,9 @@ use Payum\Core\Request\GetHumanStatus;
 
 class FetchCaptureResultAction extends AbstractApiAwareAction
 {
-
     /**
+     * {@inheritDoc}
+     *
      * @param mixed $request
      *
      * @throws \Payum\Core\Exception\RequestNotSupportedException if the action dose not support the request.
@@ -66,6 +67,8 @@ class FetchCaptureResultAction extends AbstractApiAwareAction
     }
 
     /**
+     * {@inheritDoc}
+     * 
      * @param mixed $request
      *
      * @return boolean

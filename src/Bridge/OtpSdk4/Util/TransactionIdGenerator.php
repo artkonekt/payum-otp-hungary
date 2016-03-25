@@ -15,6 +15,9 @@ namespace Konekt\PayumOtp\Bridge\OtpSdk4\Util;
 
 use Payum\Core\Exception\InvalidArgumentException;
 
+/**
+ * Class TransactionIdGenerator dealing with the generation of a unique transaction ID for a capture.
+ */
 class TransactionIdGenerator
 {
     /**

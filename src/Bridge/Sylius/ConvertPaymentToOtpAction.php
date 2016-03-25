@@ -12,12 +12,16 @@
 
 namespace Konekt\PayumOtp\Bridge\Sylius;
 
-
 use Payum\Core\Action\GatewayAwareAction;
 use Payum\Core\Exception\RequestNotSupportedException;
 use Payum\Core\Request\Convert;
 use Sylius\Component\Core\Model\PaymentInterface;
 
+/**
+ * Class ConvertPaymentToOtpAction.
+ *
+ * Deals with converting Sylius models into a format needed by OTP.
+ */
 class ConvertPaymentToOtpAction extends GatewayAwareAction
 {
     /**
@@ -35,6 +39,8 @@ class ConvertPaymentToOtpAction extends GatewayAwareAction
         $this->paymentNoteProvider = $paymentNoteProvider;
     }
     /**
+     * Converts Sylius models into a format needed by OTP.
+     *
      * @param mixed $request
      *
      * @throws \Payum\Core\Exception\RequestNotSupportedException if the action dose not support the request.
@@ -63,6 +69,8 @@ class ConvertPaymentToOtpAction extends GatewayAwareAction
     }
 
     /**
+     * {@inheritdoc}
+     * 
      * @param mixed $request
      *
      * @return boolean

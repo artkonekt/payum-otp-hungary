@@ -15,6 +15,9 @@ namespace Konekt\PayumOtp\Bridge\Symfony;
 use Payum\Bundle\PayumBundle\DependencyInjection\Factory\Gateway\AbstractGatewayFactory;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 
+/**
+ * Class OtpHungaryOffsiteGatewayFactory.
+ */
 class OtpHungaryOffsiteGatewayFactory extends AbstractGatewayFactory
 {
     /**

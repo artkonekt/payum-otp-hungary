@@ -22,8 +22,9 @@ use Payum\Core\Request\GetHumanStatus;
 
 class InitiateCaptureAction extends AbstractApiAwareAction
 {
-    
     /**
+     * {@inheritDoc}
+     *
      * @param mixed $request
      *
      * @throws \Konekt\PayumOtp\Action\HttpRedirect
@@ -36,7 +37,7 @@ class InitiateCaptureAction extends AbstractApiAwareAction
 
         $details['azonosito'] = $this->api->generateTransactionId();
 
-        $response = $this->api->capture($details, $request->getBackUrl());
+        $response = $this->api->initiateCapture($details, $request->getBackUrl());
 
         if ($response->isSuccessful()) {
 
@@ -53,6 +54,8 @@ class InitiateCaptureAction extends AbstractApiAwareAction
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @param mixed $request
      *
      * @return boolean
