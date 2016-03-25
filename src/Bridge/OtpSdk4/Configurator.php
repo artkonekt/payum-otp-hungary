@@ -18,8 +18,6 @@ class Configurator
     private $privateKeyFileName;
     private $posId;
 
-
-
     const CONFIG_FILE_NAME = 'otp_webshop_client.conf';
 
     public function __construct($config)
@@ -33,6 +31,7 @@ class Configurator
 
         define('WEBSHOP_LIB_DIR', $this->sdkLibDir);
         define('WEBSHOP_CONF_DIR', $confFileDir);
+        define('WS_CUSTOMERPAGE_CHAR_ENCODING', 'UTF-8');
     }
 
     private function generateConfigFile($dir, $config)
