@@ -12,6 +12,7 @@
 
 namespace Konekt\PayumOtp\Bridge\Symfony;
 
+use Konekt\PayumOtp\Bridge\OtpSdk4\Util\TransactionIdGenerator;
 use Payum\Bundle\PayumBundle\DependencyInjection\Factory\Gateway\AbstractGatewayFactory;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 
@@ -36,6 +37,13 @@ class OtpHungaryOffsiteGatewayFactory extends AbstractGatewayFactory
             ->scalarNode('sdk_dir')->isRequired()->cannotBeEmpty()->end()
             ->scalarNode('secret_key')->isRequired()->cannotBeEmpty()->end()
             ->scalarNode('pos_id')->isRequired()->cannotBeEmpty()->end()
+            ->scalarNode('transactionid_prefix')
+                ->validate()
+                ->ifTrue(function ($prefix) {
+                    return TransactionIdGenerator::assertPrefixValid($prefix);
+                })
+                ->thenInvalid('Invalid prefix')
+                ->end()
             ->end();
     }
 
