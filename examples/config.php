@@ -17,6 +17,7 @@ use Konekt\PayumOtp\OtpOffsiteGatewayFactory;
 use Monolog\Handler\RotatingFileHandler;
 use Monolog\Logger;
 use Payum\Core\Bridge\Psr\Log\LogExecutedActionsExtension;
+use Payum\Core\Gateway;
 use Payum\Core\GatewayFactoryInterface;
 use Payum\Core\PayumBuilder;
 use Payum\Core\Payum;
@@ -49,5 +50,7 @@ $payum = (new PayumBuilder())
 $logger = new Logger('payum-otp');
 $logger->pushHandler(new RotatingFileHandler(__DIR__ . '/../var/logs/payum-actions/actions', Logger::WARNING));
 
+
+/** @var Gateway $gateway */
 $gateway = $payum->getGateway($gatewayName);
 $gateway->addExtension(new LogExecutedActionsExtension($logger));

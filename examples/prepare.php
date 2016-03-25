@@ -16,7 +16,7 @@ $storage = $payum->getStorage($paymentClass);
 $payment = $storage->create();
 
 $payment->setCurrencyCode('HUF');
-$payment->setTotalAmount(543);
+$payment->setTotalAmount(543.12);
 $payment->setDescription('Hat ez egy uj fizetes lesz, gyurikam');
 $payment->setClientId('2345');
 $payment->setClientEmail('mikulas@beles.com');
@@ -24,7 +24,5 @@ $payment->setClientEmail('mikulas@beles.com');
 $storage->update($payment);
 
 $captureToken = $payum->getTokenFactory()->createCaptureToken($gatewayName, $payment, $basePrefixPath . '/examples/done.php');
-
-var_dump($captureToken);
 
 header("Location: ".$captureToken->getTargetUrl());

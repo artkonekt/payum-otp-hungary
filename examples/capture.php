@@ -23,6 +23,7 @@ $gatewayName = $token->getGatewayName();
 $gateway = $payum->getGateway($gatewayName);
 
 if ($reply = $gateway->execute(new Capture($token), true)) {
+    die;
     if ($reply instanceof HttpRedirect) {
         header("Location: ".$reply->getUrl());
         die();
