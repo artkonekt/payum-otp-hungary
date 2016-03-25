@@ -13,7 +13,6 @@
 
 namespace Konekt\PayumOtp\Action\Api;
 
-use Konekt\PayumOtp\Bridge\OtpSdk4\Util\TransactionIdGenerator;
 use Konekt\PayumOtp\Request\Api\Capture;
 use Konekt\PayumOtp\Request\Api\InitiateCapture;
 use Payum\Core\Bridge\Spl\ArrayObject;
@@ -35,10 +34,7 @@ class InitiateCaptureAction extends AbstractApiAwareAction
 
         $details = ArrayObject::ensureArrayObject($request->getModel());
 
-        $transactionIdGenerator = new TransactionIdGenerator();
-        $transactionId = $transactionIdGenerator->generate('POTPTEST'); //THIS SHOULD BE CONFIGURABLE
-
-        $details['azonosito'] = $transactionId;
+        $details['azonosito'] = $this->api->generateTransactionId();
 
         $response = $this->api->capture($details, $request->getBackUrl());
 

@@ -16,7 +16,7 @@ $storage = $payum->getStorage($paymentClass);
 $payment = $storage->create();
 
 $payment->setCurrencyCode('HUF');
-$payment->setTotalAmount(543.12);
+$payment->setTotalAmount(543);
 $payment->setDescription('Hat ez egy uj fizetes lesz, gyurikam');
 $payment->setClientId('2345');
 $payment->setClientEmail('mikulas@beles.com');

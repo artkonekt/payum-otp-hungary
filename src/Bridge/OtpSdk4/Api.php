@@ -12,6 +12,7 @@
 
 namespace Konekt\PayumOtp\Bridge\OtpSdk4;
 
+use Konekt\PayumOtp\Bridge\OtpSdk4\Util\TransactionIdGenerator;
 use RequestUtils;
 
 class Api
@@ -20,6 +21,9 @@ class Api
 
     private $service;
 
+    /**
+     * @var Configurator
+     */
     private $configurator;
 
     public function __construct(Configurator $configurator, $sdkService = null)
@@ -43,8 +47,16 @@ class Api
 
     public function generateTransactionId()
     {
-        $posId = $this->getPosId();
-        return $this->service->tranzakcioAzonositoGeneralas($posId);
+        if ($this->configurator->useOwnTransactionId()) {
+            //TODO: this should be injected instead
+            $transactionIdGenerator = new TransactionIdGenerator();
+            $transactionId = $transactionIdGenerator->generate($this->configurator->getTransactionIdPrefix()); //THIS SHOULD BE CONFIGURABLE
+        } else {
+            $posId = $this->getPosId();
+            $transactionId = $this->service->tranzakcioAzonositoGeneralas($posId);
+        }
+
+        return $transactionId;
     }
 
     public function capture($details, $backUrl)

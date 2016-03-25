@@ -12,6 +12,7 @@ use Konekt\PayumOtp\Action\RefundAction;
 use Konekt\PayumOtp\Action\StatusAction;
 use Konekt\PayumOtp\Bridge\OtpSdk4\Api;
 use Konekt\PayumOtp\Bridge\OtpSdk4\Configurator;
+use Konekt\PayumOtp\Bridge\OtpSdk4\Util\TransactionIdGenerator;
 use Konekt\PayumOtp\Request\Api\Capture;
 use Payum\Core\Bridge\Spl\ArrayObject;
 use Payum\Core\GatewayFactory;
@@ -38,6 +39,7 @@ class OtpOffsiteGatewayFactory extends GatewayFactory
         if (false == $config['payum.api']) {
             $config['payum.default_options'] = array(
                 'sandbox' => true,
+                'transactionid_prefix' => ''
             );
 
             $config->defaults($config['payum.default_options']);
@@ -52,6 +54,10 @@ class OtpOffsiteGatewayFactory extends GatewayFactory
                 $config['pos_id'] = '#02299991';
             } else {
                 $requiredOptions[] = 'secret_key';
+            }
+
+            if ($config['transactionid_prefix']) {
+                TransactionIdGenerator::assertPrefixValid($config['transactionid_prefix']);
             }
 
             $config['payum.required_options'] = $requiredOptions;

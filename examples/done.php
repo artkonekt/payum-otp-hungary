@@ -28,11 +28,11 @@ $gateway = $payum->getGateway($token->getGatewayName());
 $gateway->execute($status = new GetHumanStatus($token));
 
 if ($status->isCaptured()) {
-    echo 'CAPTURED, FASZIKAIM';
+    echo 'CAPTURED';
 } elseif ($status->isFailed()) {
-    echo 'Failed, gyurikam';
+    echo 'FAILED';
 } elseif ($status->isCanceled()) {
-    echo 'Cancelled, te szorakozol?';
+    echo 'CANCELLED';
 }
 
 var_dump($status);
