@@ -33,12 +33,7 @@ class FetchCaptureResultAction extends AbstractApiAwareAction
 
         $details = ArrayObject::ensureArrayObject($request->getModel());
 
-        $response = $this->api->getTransactionStatus(
-            $details['azonosito'],
-            1,
-            time() - (12 * 60 * 60),
-            time() + (12 * 60 * 60)
-        );
+        $response = $this->api->getTransactionStatus($details['azonosito']);
 
         if ($response) {
             $details['fetchInstanceId'] = $response->getInstanceId();

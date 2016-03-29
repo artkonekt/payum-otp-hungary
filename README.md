@@ -3,8 +3,8 @@
 Consists of a standard payum gateway library with which you can make online payments through OTP Bank Hungary.
 It also provides basic integration with [Symfony](http://symfony.com/) and [Sylius](http://sylius.org/).
  
-Disclaimer: the library for now it provides only simple offsite (haromszereplos) payment and for now it only supports
-a single shop (no multishop support). Feel free to contribute or ask for support if you need further functionality.
+Disclaimer: the library for now provides only simple offsite (haromszereplos) payment for a single shop (no multishop support). 
+Feel free to contribute or ask for support if you need further functionality.
 
 ## Architecture
 
