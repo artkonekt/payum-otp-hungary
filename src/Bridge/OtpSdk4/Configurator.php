@@ -78,7 +78,11 @@ class Configurator
         $contents = file_get_contents($originalConfigFile);
 
         //private keyfile config
-        $contents = preg_replace('/otp\.webshop\.PRIVATE_KEY_FILE_#02299991=.*/', 'otp.webshop.PRIVATE_KEY_FILE_#02299991=' . $this->privateKeyFileName, $contents);
+        if ('#02299991' == $this->posId) {
+            $contents = preg_replace('/otp\.webshop\.PRIVATE_KEY_FILE_#02299991=.*/', 'otp.webshop.PRIVATE_KEY_FILE_#02299991=' . $this->privateKeyFileName, $contents);
+        } else {
+            $contents = preg_replace('/otp\.webshop\.PRIVATE_KEY_FILE.*/', 'otp.webshop.PRIVATE_KEY_FILE_' . $this->posId . '=' . $this->privateKeyFileName, $contents);
+        }
 
         //log directory for the transactions keyfile config
         if (isset($config['sdk_transaction_log_dir'])) {
