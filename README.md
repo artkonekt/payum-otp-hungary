@@ -1,14 +1,16 @@
-# Custom Payum gateway for OTP Bank Hungary
- 
+# Payum Gateway for OTP Bank Hungary
+
+> The OTP based payment method has been deprecated by the bank, use SimplePay instead!
+
 Consists of a standard payum gateway library with which you can make online payments through OTP Bank Hungary.
 It also provides basic integration with [Symfony](http://symfony.com/) and [Sylius](http://sylius.org/).
- 
-Disclaimer: the library for now provides only simple offsite (haromszereplos) payment for a single shop (no multishop support). 
+
+Disclaimer: the library for now provides only simple offsite (haromszereplos) payment for a single shop (no multishop support).
 Feel free to contribute or ask for support if you need further functionality.
 
 ## Architecture
 
-The library builds on top of OTP's official SDK. It hides some of the library's inconveniences, like having to edit a 
+The library builds on top of OTP's official SDK. It hides some of the library's inconveniences, like having to edit a
 configuration file, no autoloading, messy warnings/notices and no support for PHP7.
 The official SDK's logging features work as they provide it.
 
@@ -16,19 +18,19 @@ You will have to download the SDK [from OTP's site](https://www.otpbank.hu/porta
 be able to use the library.
 
 ## SDK
- 
+
 After you downloaded the SDK (currently a ZIP file named Webshop_4.0) you will find the needed php library in the zip on the
-following path: ```kliensek/php/otpwebshop```. This is the library that is used and you have to put it in a place accessible 
+following path: ```kliensek/php/otpwebshop```. This is the library that is used and you have to put it in a place accessible
 to your web server. From now on we will call the full path where you have the library ```SDK_DIR```.
 
 Because the SDK has no proper versioning, to check if it is the same code that this library is building on you will have to generate
 the checksum of the library like this (assuming you're on Unix):
- 
+
 ```
 find SDK_DIR/ -type f -name "*.php" -exec md5sum {} + | awk '{print $1}' | sort | md5sum1
 ```
 
-The tested library has a checksum of 5a57d623e8da3541c8b8d6fd3848862c. If you have another one it means the SDK code has changed. 
+The tested library has a checksum of 5a57d623e8da3541c8b8d6fd3848862c. If you have another one it means the SDK code has changed.
 If something is not working as expected this can be a reason for that.
 
 ## Using the standalone library
@@ -36,20 +38,20 @@ If something is not working as expected this can be a reason for that.
 You will have to implement actions as described in the [Payum documentation](https://github.com/Payum/Payum/blob/master/src/Payum/Core/Resources/docs/scripts/index.md). In the ```examples``` folder you will find working scripts
 which can help you.
 
-### Configuration 
+### Configuration
 
-You will find the parameters you will have to configure in ```examples/params.dist```. 
+You will find the parameters you will have to configure in ```examples/params.dist```.
 
 * sdk_dir: The full path to the SDK (as described above). Mandatory.
 * sandbox: Can be true or false, if it is true, you don't need to provide the secret_key and pos_id. Default: true.
 * pos_id: Your shop ID given to you by OTP. Mandatory when not in sandbox mode.
 * secret_key: The full path to the secret key file belonging to the shop id given to you by OTP. Mandatory when not in sandbox mode.
-* transactionid_prefix:  For each payment the library generates a unique ID, you can specify any prefix to it here. It should be 
+* transactionid_prefix:  For each payment the library generates a unique ID, you can specify any prefix to it here. It should be
  no more than 10 characters and should be alphanumeric.
- 
+
 In addition you can configure the log dirs where the SDK will log the transactions. You will find the details in the SDK official documentation
 about each directory.
- 
+
 ## Using the library with Sylius
 
 You will have to register the action which converts the Sylius models into the gateway's data as a service.
@@ -100,7 +102,7 @@ payum:
 ```
 
 You can define the parameters in your ```parameters.yml``` (recommended). For the meaning of the parameters see the Configuration section above.
-Note: even if you are in sandbox mode you will have to provide a value for secret_key and pos_id, but in this case it doesn't matter what you provide 
+Note: even if you are in sandbox mode you will have to provide a value for secret_key and pos_id, but in this case it doesn't matter what you provide
 there (this is a technical depth for now).
 
 ### Error handling
@@ -116,7 +118,7 @@ app.payum.otp.extension.error_notifier:
         - @event_dispatcher
 ```
 
-Then you will have to write a listener in your app and define it as a service. Implement ```MyOtpListener``` which sends an email if an error 
+Then you will have to write a listener in your app and define it as a service. Implement ```MyOtpListener``` which sends an email if an error
 occurs:
 
 ```php
@@ -150,7 +152,7 @@ app.listener.otp_error:
         - { name: kernel.event_listener, event: payum.otp.transaction_error, method: handleTransactionErrors }
 ```
 
-In the ```MyOtpListener::handleTransactionErrors``` method you will get a ```TransactionError``` event, which contains the 
+In the ```MyOtpListener::handleTransactionErrors``` method you will get a ```TransactionError``` event, which contains the
 array of occured errors and other details of the transaction. You can write your handling logic as you need.
 
 # FINAL NOTES
