@@ -1,10 +1,11 @@
 # Payum OTP Hungary
 
-## Unreleased
-##### 2021-XX-YY
+## 1.1.0
+##### 2021-01-13
 
-- Fixed sandbox mode with SimplePay: SP has separate sandbox URLs, where OTP used to have a single,
-  common one for both live/sandbox
+- Fixed sandbox mode with SimplePay: SP has separate sandbox URLs (OTP used to have a single, common URL for both live/sandbox environments)
+- Added `Configurator::isSandbox()` method
+- Added `Api::runningInSandboxMode()` method
 
 ## 1.0.2
 ##### 2021-01-04

@@ -1,6 +1,12 @@
-# Payum Gateway for OTP Bank Hungary
+# Payum Gateway for SimplePay Hungary via the Legacy OTP Integration
+
+[![Packagist Stable Version](https://img.shields.io/packagist/v/konekt/payum-otp-hungary.svg?style=flat-square&label=stable)](https://packagist.org/packages/konekt/payum-otp-hungary)
+[![OTP SDK v5](https://img.shields.io/badge/OTP%20SDK-v5-52ae30.svg?style=flat-square)](http://simplepartner.hu/download.php?target=webshop5)
+[![SimplePay Compatible](https://img.shields.io/badge/SimplePay-compatible-20c4f4.svg?style=flat-square)](http://simplepartner.hu/download.php?target=otpvposen)
 
 > The OTP based payment method has been deprecated by the bank, use SimplePay instead!
+
+> It works with OTP SDK v5 despite the names and references to v4.
 
 Consists of a standard payum gateway library with which you can make online payments through OTP Bank Hungary.
 It also provides basic integration with [Symfony](http://symfony.com/) and [Sylius](http://sylius.org/).
