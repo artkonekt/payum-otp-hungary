@@ -1,7 +1,13 @@
 # Payum OTP Hungary
 
+## Unreleased
+##### 2021-XX-YY
+
+- Fixed sandbox mode with SimplePay: SP has separate sandbox URLs, where OTP used to have a single,
+  common one for both live/sandbox
+
 ## 1.0.2
-##### 2020-01-04
+##### 2021-01-04
 
 - Changed redirect URL from OTP to SimplePay
 - Added Changelog (older entries have been reconstructed from git history)

@@ -7,7 +7,7 @@
  * @author      Lajos Fazakas
  * @license     MIT
  * @since       2016-03-21
- * @version     2016-03-21
+ * @version     2021-01-13
  */
 
 namespace Konekt\PayumOtp\Action\Api;
@@ -23,6 +23,7 @@ use Payum\Core\Exception\UnsupportedApiException;
  */
 abstract class AbstractApiAwareAction extends GatewayAwareAction implements ActionInterface, ApiAwareInterface
 {
+    /** @var Api */
     protected $api;
 
     /**

@@ -2,24 +2,20 @@
 /**
  * Contains class Configurator
  *
- * @package     Konekt\PayumOtp\Bridge\OtpSdk4
  * @copyright   Copyright (c) 2016 Storm Storez Srl-D
  * @author      Lajos Fazakas
  * @license     MIT
  * @since       2016-03-15
- * @version     2016-03-15
+ * @version     2021-01-13
  */
 
 namespace Konekt\PayumOtp\Bridge\OtpSdk4;
 
 /**
- * Class Configurator.
- *
- * Abstracts the configuration of the gateway and provides a mechanism which simplifies OTP's SDK configuration. The
- * SDK requires to configuration files and define some constants. The class does this for you, so you can configure the
- * gateway in the Payum way, through a configuration array.
- *
- * TODO: refactor (SRP)
+ * Abstracts the configuration of the gateway and provides a mechanism to simplify
+ * the configuration of the OTP SDK. The SDK requires the configs to be written
+ * to files and to define some constants. This class writes these conf files
+ * on the fly, so you can configure the gateway the Payum way, via arrays
  */
 class Configurator
 {
@@ -45,6 +41,9 @@ class Configurator
      */
     private $transactionIdPrefix;
 
+    /** @var bool */
+    private $isSandbox = false;
+
     /**
      * Configurator constructor.
      *
@@ -56,6 +55,7 @@ class Configurator
         $this->sdkLibDir = $config['sdk_dir'] . '/lib';
         $this->posId = $config['pos_id'];
         $this->transactionIdPrefix = $config['transactionid_prefix'];
+        $this->isSandbox = (bool) $config['sandbox'] ?? false;
 
         //the config file used by the SDK will be in the temp dir
         $confFileDir = sys_get_temp_dir();
@@ -82,6 +82,12 @@ class Configurator
             $contents = preg_replace('/otp\.webshop\.PRIVATE_KEY_FILE_#02299991=.*/', 'otp.webshop.PRIVATE_KEY_FILE_#02299991=' . $this->privateKeyFileName, $contents);
         } else {
             $contents = preg_replace('/otp\.webshop\.PRIVATE_KEY_FILE.*/', 'otp.webshop.PRIVATE_KEY_FILE_' . $this->posId . '=' . $this->privateKeyFileName, $contents);
+        }
+
+        if ($this->isSandbox()) {
+            $contents = preg_replace('/otp\.webshop\.OTPMW_SERVER_URL=.*/', 'otp.webshop.OTPMW_SERVER_URL="https://sandbox.simplepay.hu/mw/mw/pspHU"', $contents);
+        } else {
+            $contents = preg_replace('/otp\.webshop\.OTPMW_SERVER_URL=.*/', 'otp.webshop.OTPMW_SERVER_URL="https://securepay.simplepay.hu/mw/mw/pspHU"', $contents);
         }
 
         //log directory for the transactions keyfile config
@@ -126,6 +132,12 @@ class Configurator
     public function getPosId()
     {
         return $this->posId;
+    }
+
+    /** @return bool */
+    public function isSandbox()
+    {
+        return $this->isSandbox;
     }
 
     /**

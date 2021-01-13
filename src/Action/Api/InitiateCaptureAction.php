@@ -1,14 +1,13 @@
 <?php
 
 /**
- * Contains class CaptureAction
+ * Contains class InitiateCaptureAction
  *
- * @package     ${NAMESPACE}
  * @copyright   Copyright (c) 2016 Storm Storez Srl-D
  * @author      Lajos Fazakas
  * @license     MIT
  * @since       2016-03-21
- * @version     2016-03-21
+ * @version     2021-01-13
  */
 
 namespace Konekt\PayumOtp\Action\Api;
@@ -44,7 +43,12 @@ class InitiateCaptureAction extends AbstractApiAwareAction
             $details['status'] = GetHumanStatus::STATUS_PENDING;
             $details['captureInstanceId'] = $response->getInstanceId();
 
-            $url = sprintf('https://securepay.simplepay.hu/pay/pay/webshop/do/webShopVasarlasInditas?posId=%s&azonosito=%s', urlencode($this->api->getPosId()), urlencode($details['azonosito']));
+            if ($this->api->runningInSandboxMode()) {
+                $url = sprintf('https://sandbox.simplepay.hu/pay/pay/webshop/do/webShopVasarlasInditas?posId=%s&azonosito=%s', urlencode($this->api->getPosId()), urlencode($details['azonosito']));
+            } else {
+                $url = sprintf('https://securepay.simplepay.hu/pay/pay/webshop/do/webShopVasarlasInditas?posId=%s&azonosito=%s', urlencode($this->api->getPosId()), urlencode($details['azonosito']));
+            }
+
             throw new HttpRedirect($url);
         } else {
             //TOREVIEW

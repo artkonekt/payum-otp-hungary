@@ -2,12 +2,11 @@
 /**
  * Contains class Api
  *
- * @package     Konekt\PayumOtp\Bridge\OtpSdk4
  * @copyright   Copyright (c) 2016 Storm Storez Srl-D
  * @author      Lajos Fazakas
  * @license     MIT
  * @since       2016-03-15
- * @version     2016-03-15
+ * @version     2021-01-13
  */
 
 namespace Konekt\PayumOtp\Bridge\OtpSdk4;
@@ -17,11 +16,10 @@ use RequestUtils;
 use WResponse;
 
 /**
- * Class Api.
- *
- * The class is a wrapper for the SDK's service. It hides the SDK's method calls and also does some error suppressing
- * functionality. It suppresses the notices issued by the SDK and after the call it restores the original error reporting
- * (the SDK sets some error reporting, but we want to keep ours).
+ * The class is a wrapper for the SDK's service. It hides the SDK's method calls and also
+ * does some error suppressing  functionality. It suppresses the notices issued by the
+ * SDK and after the call it restores the original error reporting. The SDK sets up
+ * error reporting, but for Payum integration we want to use our variant instead
  */
 class Api
 {
@@ -52,7 +50,7 @@ class Api
         $serviceName = $this->configurator->getMainServiceFile();
         //There is no autoloading in the SDK, we need to include the class file
         require_once($serviceName);
-        
+
         //TODO: relocate this to the documentation
         $this->suppressLibraryErrors();
         $this->service = new \WebShopService();
@@ -173,5 +171,11 @@ class Api
     public function getPosId()
     {
         return $this->configurator->getPosId();
+    }
+
+    /** @return bool */
+    public function runningInSandboxMode()
+    {
+        return $this->configurator->isSandbox();
     }
 }
