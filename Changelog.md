@@ -1,5 +1,10 @@
 # Payum OTP Hungary
 
+## 1.1.1
+##### 2021-01-26
+
+- Handle timeout state
+
 ## 1.1.0
 ##### 2021-01-13
 
