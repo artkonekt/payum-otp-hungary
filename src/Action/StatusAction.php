@@ -36,6 +36,9 @@ class StatusAction implements ActionInterface
                 case (GetHumanStatus::STATUS_CANCELED):
                     $request->markCanceled();
                     break;
+                case (GetHumanStatus::STATUS_EXPIRED):
+                    $request->markExpired();
+                    break;
                 default:
                     $request->markUnknown();
             }

@@ -49,6 +49,8 @@ class FetchCaptureResultAction extends AbstractApiAwareAction
                     $details['authorizationCode'] = $tranzAdatok->getAuthorizaciosKod();
                 } else if ("VISSZAUTASITOTTFIZETES" == $responseCode) {
                     $details['status'] = GetHumanStatus::STATUS_CANCELED; //TODO??
+                } else if ("FIZETESTIMEOUT" == $responseCode) {
+                    $details['status'] = GetHumanStatus::STATUS_EXPIRED;
                 } else {
                     $details['status'] = GetHumanStatus::STATUS_FAILED; //TODO??
                 }
